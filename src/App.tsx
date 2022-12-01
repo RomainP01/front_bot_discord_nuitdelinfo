@@ -1,34 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { HomePage } from './pages/HomePage';
+import { getTheme } from './queries/getTheme'
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore/lite';
+import { firebaseConfig } from './firebaseConfig';
+import { useEffect, useState } from 'react';
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export const App = () => {
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const [color, setColor] = useState();
+  useEffect(() => {
+    const getColorFirebase = async () => {
+      const result = await getTheme(db);
+      setColor(result);
+    };
+    getColorFirebase();
+  }, []);
+  console.log(color)
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <HomePage />
+    </ThemeProvider>
   )
 }
 
-export default App
+
+
+
+
