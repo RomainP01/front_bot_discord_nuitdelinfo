@@ -12,6 +12,8 @@ import { PaletteMode } from '@mui/material';
 import './utils/i18n';
 import i18next from 'i18next';
 import { getLanguage } from './queries/getLanguage';
+import { DocumentationPage } from './pages/DocumentationPage';
+import { MessagesPage } from './pages/MessagesPage';
 const darkTheme = (color: PaletteMode) => createTheme({
   palette: {
     mode: color,
@@ -37,11 +39,15 @@ export const App = () => {
   }, []);
   i18next.changeLanguage(language)
   const HeaderHomePage = addHeaderToComponent(HomePage, db)
+  const HeaderDocumentationPage = addHeaderToComponent(DocumentationPage, db)
+  const HeaderMessagesPage = addHeaderToComponent(MessagesPage, db)
   return (
     <ThemeProvider theme={darkTheme(color as unknown as PaletteMode)}>
       <CssBaseline />
       <Routes>
         <Route path='/' element={<HeaderHomePage />} />
+        <Route path='/Doc' element={<HeaderDocumentationPage />} />
+        <Route path='/Messages' element={<HeaderMessagesPage />} />
       </Routes>
     </ThemeProvider>
   )

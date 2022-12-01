@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next"
 import { useState, useEffect } from "react"
 import { Firestore } from "firebase/firestore/lite"
 import { getHomepageBanner } from "../queries/getHomepageBanner"
-interface HomepageProps {
+interface HomePageProps {
     db: Firestore
 }
-export const HomePage = ({ db }: HomepageProps) => {
+export const HomePage = ({ db }: HomePageProps) => {
     const { t } = useTranslation()
     const [homepageBanner, setHomepageBanner] = useState()
     useEffect(() => {
@@ -16,7 +16,6 @@ export const HomePage = ({ db }: HomepageProps) => {
         };
         getHomepageBannerFirebase();
     }, []);
-    console.log(homepageBanner)
     return (
         <Grid container item xs={12} md={12} justifyContent="center">
             <Grid container item xs={12} md={12} justifyContent="center" alignItems="center" style={{ marginTop: '10vh', marginBottom: '10vh', height: '50vh', backgroundColor: 'RGBA(0,0,0,0.40)', overflow: 'hidden' }}>

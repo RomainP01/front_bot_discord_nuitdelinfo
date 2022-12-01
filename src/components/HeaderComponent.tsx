@@ -2,6 +2,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Avatar, Box, Button, Container, Grid, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from 'react-router-dom';
 
 export const HeaderComponent = () => {
     const { t } = useTranslation()
@@ -23,7 +24,7 @@ export const HeaderComponent = () => {
         setAnchorElUser(null);
     };
 
-    const pages = [t('header.homepage'), t('header.documentation'), t('header.messages')];
+    const pages = [{ title: t('header.homepage'), link: "/" }, { title: t('header.documentation'), link: "/Doc" }, { title: t('header.messages'), link: "/Messages" }];
     return (
         <AppBar position="static" >
             <Container maxWidth="xl">
@@ -78,8 +79,8 @@ export const HeaderComponent = () => {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center" component="a" href={page.link}>{page.title}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -107,16 +108,17 @@ export const HeaderComponent = () => {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
-                                key={page}
+                                key={page.title}
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
+                                component="a" href={page.link}
                             >
-                                {page}
+                                {page.title}
                             </Button>
                         ))}
                     </Box>
                 </Toolbar>
             </Container>
-        </AppBar>
+        </AppBar >
     )
 }
