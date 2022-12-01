@@ -1,6 +1,8 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { HomePage } from './pages/HomePage';
+import { Route, Routes } from 'react-router-dom'
+import { HomePage } from './pages/HomePage'
+import { addHeaderToComponent } from './templates/PageWithHeader'
 import { getTheme } from './queries/getTheme'
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore/lite';
@@ -34,10 +36,13 @@ export const App = () => {
     getLanguageFirebase();
   }, []);
   i18next.changeLanguage(language)
+  const HeaderHomePage = addHeaderToComponent(HomePage, db)
   return (
     <ThemeProvider theme={darkTheme(color as unknown as PaletteMode)}>
       <CssBaseline />
-      <HomePage />
+      <Routes>
+        <Route path='/' element={<HeaderHomePage />} />
+      </Routes>
     </ThemeProvider>
   )
 }
