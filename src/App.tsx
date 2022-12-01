@@ -6,9 +6,10 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore/lite';
 import { firebaseConfig } from './firebaseConfig';
 import { useEffect, useState } from 'react';
-const darkTheme = createTheme({
+import { PaletteMode } from '@mui/material';
+const darkTheme = (color: PaletteMode) => createTheme({
   palette: {
-    mode: 'dark',
+    mode: color,
   },
 });
 
@@ -23,9 +24,8 @@ export const App = () => {
     };
     getColorFirebase();
   }, []);
-  console.log(color)
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={darkTheme(color as unknown as PaletteMode)}>
       <CssBaseline />
       <HomePage />
     </ThemeProvider>
